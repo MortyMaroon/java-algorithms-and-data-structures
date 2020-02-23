@@ -4,13 +4,17 @@ public class OrdArray {
     private long[] array;
     private int nElements;
 
-    public OrdArray(int max) {
-        this.array = new long[max];
-        this.nElements = 0;
+    public long[] getArray() {
+        return array;
     }
 
     public int size(){
         return nElements;
+    }
+
+    public OrdArray(int max) {
+        this.array = new long[max];
+        this.nElements = 0;
     }
 
     public int find(long searchKey) {
@@ -34,16 +38,35 @@ public class OrdArray {
     }
 
     public void insert(long value) {
-        int i;
-        for (i = 0; i < nElements; i++) {
-            if (array[i] > value) {
+        int lowBound = 0;
+        int upperBound = nElements - 1;
+        int curIn;
+        while (true) {
+            curIn = (lowBound + upperBound) / 2;
+            if (array[curIn] == value) {
                 break;
+            } else if (lowBound > upperBound) {
+                if (value >= array[curIn]) {
+                    if (array[curIn] == 0 && nElements == 0) {
+                        curIn = 0;
+                    } else {
+                        curIn++;
+                    }
+                }
+                break;
+            } else {
+                if (array[curIn] < value){
+                    lowBound = curIn + 1;
+                } else {
+                    upperBound = curIn - 1;
+                }
             }
         }
-        for (int j = nElements; j > i; j--) {
-            array[j] = array[j - 1];
+
+        for (int i = nElements; i > curIn; i--) {
+            array[i] = array[i - 1];
         }
-        array[i] = value;
+        array[curIn] = value;
         nElements++;
     }
 
@@ -65,5 +88,13 @@ public class OrdArray {
             System.out.print(array[i] + " ");
         }
         System.out.println("");
+    }
+
+    public void merge(long[] array) {
+        for (long element: array) {
+            if (find(element) == nElements) {
+                insert(element);
+            }
+        }
     }
 }
