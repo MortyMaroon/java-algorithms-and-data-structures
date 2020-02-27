@@ -1,6 +1,5 @@
 package Chap03;
 
-import java.util.ArrayList;
 
 public class BubbleSortApp {
     public static void main(String[] args) {
@@ -18,8 +17,11 @@ public class BubbleSortApp {
         array.insert(66);
         array.insert(33);
 
-        array.display();
-        array.bubbleSort();
-        array.display();
+//        array.display();
+//        array.alternativeSort();
+//        array.bubbleSort();
+        array.oddEvenSort();
+//        array.display();
+
     }
 }
