@@ -47,4 +47,17 @@ public class Queue {
     public int size() {
         return nElements;
     }
+
+    public void print() {
+        long temp;
+        if (isEmpty()) {
+            System.out.println("Queue is empty");
+        } else {
+            while (!isEmpty()) {
+                temp = remove();
+                System.out.print(temp + " ");
+            }
+            System.out.println();
+        }
+    }
 }
