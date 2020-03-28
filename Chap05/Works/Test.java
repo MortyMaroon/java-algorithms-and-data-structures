@@ -4,6 +4,8 @@ public class Test {
     public static void main(String[] args) {
         testPriorityQueueOnSortedLinkedList();
         testDeqOnDoublyLinkedList();
+        TestCyclicList();
+        TestStackOnCyclicList();
     }
 
     public static void testPriorityQueueOnSortedLinkedList() {
@@ -41,6 +43,55 @@ public class Test {
         System.out.println("First " + dequeue.peekLeft() + " and last " + dequeue.peekRight() + " element");
         dequeue.insertAfter(30,60);
         dequeue.deleteKey(30);
+        System.out.println(" ");
+    }
+
+    public static void TestCyclicList() {
+        System.out.println("Testing CyclicLink");
+        CyclicList list = new CyclicList();
+        list.insert(1);
+        list.insert(2);
+        list.insert(3);
+        list.insert(4);
+        list.insert(5);
+        list.insert(6);
+        list.insert(7);
+        list.insert(8);
+        list.displayList();
+        LinkItem temp = new LinkItem(5,5);
+        list.delete(temp);
+        list.displayList();
+        list.deleteFirst();
+        list.displayList();
+        list.deleteFirst();
+        list.displayList();
+        list.deleteFirst();
+        list.displayList();
+        list.deleteFirst();
+        list.displayList();
+        list.deleteFirst();
+        list.displayList();
+        list.deleteFirst();
+        list.displayList();
+        list.deleteFirst();
+        list.displayList();
+        System.out.println();
+    }
+
+    public static void TestStackOnCyclicList() {
+        System.out.println("Testing StackOnCyclicList");
+        StackOnCyclicList stackOnCyclicList = new StackOnCyclicList();
+        stackOnCyclicList.insert(10);
+        stackOnCyclicList.insert(20);
+        stackOnCyclicList.insert(30);
+        System.out.println( stackOnCyclicList.peekFront());
+        stackOnCyclicList.insert(40);
+        stackOnCyclicList.insert(50);
+        while (!stackOnCyclicList.isEmpty())
+        {
+            long value = stackOnCyclicList.remove();
+            System.out.print(value + " ");
+        }
         System.out.println(" ");
     }
 }
