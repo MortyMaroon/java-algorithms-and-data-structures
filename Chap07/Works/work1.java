@@ -68,4 +68,28 @@ public class work1 {
         theArray[secondValue] = theArray[firstValue] - theArray[secondValue];
         theArray[firstValue] = theArray[firstValue] - theArray[secondValue];
     }
+
+    int medianReq(int left, int right)
+    {
+        int leftPartition = left - 1;
+        int rightPartition = right + 1;
+
+        while (true)
+        {
+            while (leftPartition < right && theArray[++leftPartition] < theArray[nElements - 1])
+            {
+            }
+
+            while (rightPartition > left && theArray[--rightPartition] > theArray[nElements -1 ])
+            {
+            }
+
+            if (leftPartition >= rightPartition)
+            {
+                break;
+            }
+        }
+
+        return leftPartition;
+    }
 }
