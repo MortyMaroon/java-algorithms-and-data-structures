@@ -1,7 +1,13 @@
 package Chap08;
 
+import java.util.Stack;
+
 public class Tree {
     private Node root;
+
+    public Tree(){
+        this.root = null;
+    }
 
     public Node find(int key){
         Node current = root;
@@ -19,11 +25,11 @@ public class Tree {
     }
 
     public void insert(int id, double dd){
-        Node newNOde = new Node();
-        newNOde.iData = id;
-        newNOde.fData = dd;
+        Node newNode = new Node();
+        newNode.iData = id;
+        newNode.dData = dd;
         if (root == null) {
-            root = newNOde;
+            root = newNode;
         } else {
             Node current = root;
             Node parent;
@@ -32,25 +38,17 @@ public class Tree {
                 if (id < current.iData){
                     current = current.leftChild;
                     if (current == null) {
-                        parent.leftChild = newNOde;
+                        parent.leftChild = newNode;
                         return;
                     }
                 } else {
                     current = current.rightChild;
                     if (current == null) {
-                        parent.rightChild = newNOde;
+                        parent.rightChild = newNode;
                         return;
                     }
                 }
             }
-        }
-    }
-
-    public void inOrder(Node localRoot){
-        if (localRoot != null){
-            inOrder(localRoot.leftChild);
-            System.out.println(localRoot.iData + " ");
-            inOrder(localRoot.rightChild);
         }
     }
 
@@ -82,21 +80,29 @@ public class Tree {
                 return false;
             }
         }
-        if (current.leftChild == null){
+        if (current.leftChild == null && current.rightChild == null){
             if (current == root){
-                root = current.rightChild;
+                root = null;
             }else if (isLeftChild){
-                parent.leftChild = current.rightChild;
+                parent.leftChild = null;
             }else{
-                parent.rightChild = current.rightChild;
+                parent.rightChild = null;
             }
-        } else if (current.rightChild == null){
-            if (current == root){
+        } else if (current.rightChild == null) {
+            if (current == root) {
                 root = current.leftChild;
-            }else if (isLeftChild){
+            } else if (isLeftChild) {
                 parent.leftChild = current.leftChild;
-            }else {
+            } else {
                 parent.rightChild = current.leftChild;
+            }
+        }else if (current.leftChild == null){
+            if (current == root) {
+                root = current.rightChild;
+            } else if (isLeftChild) {
+                parent.leftChild = current.rightChild;
+            } else {
+                parent.rightChild = current.rightChild;
             }
         } else {
             Node successor = getSuccessor(current);
@@ -114,7 +120,7 @@ public class Tree {
 
     public Node getSuccessor(Node delNode){
         Node successorParent = delNode;
-        Node successor = delNode.rightChild;
+        Node successor = delNode;
         Node current = delNode.rightChild;
         while (current != null) {
             successorParent = successor;
@@ -126,5 +132,84 @@ public class Tree {
             successor.rightChild = delNode.rightChild;
         }
         return successor;
+    }
+
+    public void travers(int traversType){
+        switch (traversType){
+            case 1:
+                System.out.print("\nPreorder traversal: ");
+                preOrder(root);
+                break;
+            case 2:
+                System.out.print("\nInorder traversal: ");
+                inOrder(root);
+                break;
+            case 3:
+                System.out.print("\nPostorder traversal: ");
+                postOrder(root);
+                break;
+        }
+    }
+
+    public void preOrder(Node localRoot){
+        if (localRoot != null){
+            System.out.print(localRoot.iData + " ");
+            preOrder(localRoot.leftChild);
+            preOrder(localRoot.rightChild);
+        }
+    }
+
+    public void inOrder(Node localRoot){
+        if (localRoot != null){
+            inOrder(localRoot.leftChild);
+            System.out.print(localRoot.iData + " ");
+            inOrder(localRoot.rightChild);
+        }
+    }
+
+    public void postOrder(Node localRoot){
+        if (localRoot != null){
+            postOrder(localRoot.leftChild);
+            postOrder(localRoot.rightChild);
+            System.out.print(localRoot.iData + " ");
+        }
+    }
+
+    public void displayTree(){
+        Stack globalStack = new Stack();
+        globalStack.push(root);
+        int nBlanks = 32;
+        boolean isRoweEmpty = false;
+        while(isRoweEmpty == false) {
+            Stack localStack = new Stack();
+            isRoweEmpty = true;
+            for (int i = 0; i < nBlanks; i++) {
+                System.out.print(" ");
+            }
+            while(globalStack.isEmpty()==false){
+                Node temp = (Node)globalStack.pop();
+                if (temp != null){
+                    System.out.print(temp.iData);
+                    localStack.push(temp.leftChild);
+                    localStack.push(temp.rightChild);
+                    if (temp.leftChild != null || temp.rightChild != null){
+                        isRoweEmpty = false;
+                    }
+                }else{
+                    System.out.print("--");
+                    localStack.push(null);
+                    localStack.push(null);
+                }
+                for (int i = 0; i < nBlanks * 2 - 2; i++) {
+                    System.out.print(" ");
+
+                }
+                System.out.println();
+                nBlanks /= 2;
+                while(localStack.isEmpty() == false){
+                    globalStack.push(localStack.pop());
+                }
+            }
+        }
     }
 }

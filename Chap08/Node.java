@@ -1,12 +1,16 @@
 package Chap08;
 
 public class Node {
-    int iData;
-    double fData;
-    Node leftChild;
-    Node rightChild;
+    public int iData;
+    public double dData;
+    public Node leftChild;
+    public Node rightChild;
 
     public void displayNode(){
-
+        System.out.print("{");
+        System.out.print(iData);
+        System.out.print(", ");
+        System.out.print(dData);
+        System.out.print("} ");
     }
 }
