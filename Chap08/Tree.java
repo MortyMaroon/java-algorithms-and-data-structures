@@ -1,5 +1,7 @@
 package Chap08;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 public class Tree {
@@ -22,6 +24,10 @@ public class Tree {
             }
         }
         return current;
+    }
+
+    public void insert(Node node){
+        insert(node.iData, node.dData);
     }
 
     public void insert(int id, double dd){
@@ -176,18 +182,18 @@ public class Tree {
     }
 
     public void displayTree(){
-        Stack globalStack = new Stack();
+        Stack<Node> globalStack = new Stack<>();
         globalStack.push(root);
         int nBlanks = 32;
         boolean isRoweEmpty = false;
         while(isRoweEmpty == false) {
-            Stack localStack = new Stack();
+            Stack<Node> localStack = new Stack<>();
             isRoweEmpty = true;
             for (int i = 0; i < nBlanks; i++) {
                 System.out.print(" ");
             }
             while(globalStack.isEmpty()==false){
-                Node temp = (Node)globalStack.pop();
+                Node temp = globalStack.pop();
                 if (temp != null){
                     System.out.print(temp.iData);
                     localStack.push(temp.leftChild);
@@ -211,5 +217,66 @@ public class Tree {
                 }
             }
         }
+    }
+
+    public Tree makeTreeFromUserChars(String inputChars){
+        Deque<Tree> treeDeque = new ArrayDeque<>();
+        char[] chars = inputChars.toCharArray();
+        Node tempNode = new Node('+','+');
+        int counter = 0;
+        while(counter < chars.length) {
+            if (tempNode.leftChild == null){
+                tempNode.leftChild = new Node(chars[counter], chars[counter]);
+                if (++counter >= chars.length){
+                    Tree smallTree = new Tree();
+                    smallTree.insert(tempNode);
+                    treeDeque.add(smallTree);
+                }
+            } else if (tempNode.rightChild == null){
+                tempNode.rightChild = new Node(chars[counter], chars[counter]);
+                if (++counter >= chars.length){
+                    Tree smallTree = new Tree();
+                    smallTree.insert(tempNode);
+                    treeDeque.add(smallTree);
+                }
+            } else {
+                Tree smallTree = new Tree();
+                smallTree.insert(tempNode);
+                treeDeque.add(smallTree);
+            }
+        }
+        return makeTree(treeDeque);
+    }
+
+    private static Tree makeTree(Deque<Tree> treeDeque){
+        if (treeDeque.size() == 1) {
+            return treeDeque.poll();
+        }
+        Node tempNode = new Node('+','+');
+        while (treeDeque.size() != 0) {
+            if (tempNode.leftChild == null) {
+                tempNode.leftChild = treeDeque.poll().root;
+                if (treeDeque.size() == 0) {
+                    Tree mediumTree = new Tree();
+                    mediumTree.insert(tempNode);
+                    treeDeque.addLast(mediumTree);
+                    break;
+                }
+            } else if (tempNode.rightChild == null) {
+                tempNode.rightChild = treeDeque.poll().root;
+                if (treeDeque.size() == 0) {
+                    Tree mediumTree = new Tree();
+                    mediumTree.insert(tempNode);
+                    treeDeque.addLast(mediumTree);
+                    break;
+                }
+            } else {
+                Tree mediumTree = new Tree();
+                mediumTree.insert(tempNode);
+                treeDeque.addLast(mediumTree);
+                tempNode = new Node('+','+');
+            }
+        }
+        return treeDeque.poll();
     }
 }

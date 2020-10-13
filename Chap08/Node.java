@@ -6,6 +6,14 @@ public class Node {
     public Node leftChild;
     public Node rightChild;
 
+    public Node(int iData, double dData) {
+        this.iData = iData;
+        this.dData = dData;
+    }
+
+    public Node() {
+    }
+
     public void displayNode(){
         System.out.print("{");
         System.out.print(iData);
