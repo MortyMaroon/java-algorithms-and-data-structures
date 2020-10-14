@@ -11,6 +11,10 @@ public class Tree {
         this.root = null;
     }
 
+    public Tree(Node root){
+        this.root = root;
+    }
+
     public Node find(int key){
         Node current = root;
         while (current.iData != key){
@@ -278,5 +282,54 @@ public class Tree {
             }
         }
         return treeDeque.poll();
+    }
+
+    public Tree makeFullTreeFromUserChars(String inputChars) {
+        return makeFullTree(inputChars.toCharArray(), null, 0);
+    }
+
+    private static Tree makeFullTree(char[] chars, Node rootNode, int rootNodePosition) {
+        if (chars.length == 0) {
+            return null;
+        }
+        Node node;
+        Character character;
+        Tree tree;
+        if (rootNode == null) {
+            character = chars[rootNodePosition];
+            node = new Node(character, character);
+        } else {
+            node = rootNode;
+        }
+
+        int leftNodePosition = rootNodePosition * 2 + 1;
+        if (chars.length <= leftNodePosition) {
+            return new Tree(node);
+        } else {
+            node.leftChild = new Node(chars[leftNodePosition], chars[leftNodePosition]);
+        }
+
+        int rightNodePosition = rootNodePosition * 2 + 2;
+        if (chars.length <= rightNodePosition) {
+            return new Tree(node);
+        } else {
+            node.rightChild = new Node(chars[rightNodePosition], chars[rightNodePosition]);
+        }
+
+        tree = new Tree(node);
+
+        Tree leftSubTree = makeFullTree(chars, tree.root.leftChild, leftNodePosition);
+        if (leftSubTree == null) {
+            return new Tree(node);
+        }
+        node.leftChild = leftSubTree.root;
+
+        Tree rightSubTree = makeFullTree(chars, tree.root.rightChild, rightNodePosition);
+        if (rightSubTree == null) {
+            return new Tree(node);
+        }
+        node.rightChild = rightSubTree.root;
+
+        return tree;
     }
 }
