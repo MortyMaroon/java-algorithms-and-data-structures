@@ -34,7 +34,7 @@ public class HashTableApp {
                     case 's':
                         theHashtable.displayTable();
                         break;
-                    case '1':
+                    case 'i':
                         System.out.print("Enter key value to insert: ");
                         aKey = getInt();
                         aDataItem = new DataItem(aKey);
