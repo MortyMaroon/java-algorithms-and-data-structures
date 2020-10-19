@@ -2,9 +2,12 @@ package Chap11;
 
 public class HashTable
 {
-    private DataItem[] hashArray;
-    private int arraySize;
-    private DataItem nonItem = new DataItem(-1);
+    protected DataItem[] hashArray;
+    protected int arraySize;
+    protected DataItem nonItem = new DataItem(-1);
+
+    public HashTable() {
+    }
 
     public HashTable(int size)
         {
