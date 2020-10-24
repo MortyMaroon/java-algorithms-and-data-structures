@@ -1,11 +1,14 @@
 package Chap13;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 public class Graph {
     private final int MAX_VERTS = 20;
     private Vertex vertexList[];
     private Stack<Integer> theStack;
+    private Queue<Integer> theQueue;
     private int adjMat[][];
     private int nVerts;
 
@@ -13,6 +16,7 @@ public class Graph {
         this.vertexList = new Vertex[MAX_VERTS];
         this.adjMat = new int[MAX_VERTS][MAX_VERTS];
         this.theStack = new Stack<>();
+        this.theQueue = new LinkedList<>();
         this.nVerts = 0;
         for (int i = 0; i < MAX_VERTS; i++) {
             for (int j = 0; j < MAX_VERTS; j++) {
@@ -52,6 +56,24 @@ public class Graph {
                 vertexList[v].wasVisited = true;
                 displayVertex(v);
                 theStack.push(v);
+            }
+        }
+        for (int i = 0; i < nVerts; i++) {
+            vertexList[i].wasVisited = false;
+        }
+    }
+
+    public void bfs() {
+        vertexList[0].wasVisited = true;
+        displayVertex(0);
+        theQueue.add(0);
+        int v2;
+        while (!theQueue.isEmpty()) {
+            int v1 = theQueue.remove();
+            while ((v2 = getAdjUnvisitedVertex(v1)) != -1) {
+                vertexList[v2].wasVisited = true;
+                displayVertex(v2);
+                theQueue.add(v2);
             }
         }
         for (int i = 0; i < nVerts; i++) {
