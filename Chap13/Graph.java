@@ -16,7 +16,7 @@ public class Graph {
         this.vertexList = new Vertex[MAX_VERTS];
         this.adjMat = new int[MAX_VERTS][MAX_VERTS];
         this.theStack = new Stack<>();
-        this.theQueue = new LinkedList<>();
+        this.theQueue = new LinkedList< >();
         this.nVerts = 0;
         for (int i = 0; i < MAX_VERTS; i++) {
             for (int j = 0; j < MAX_VERTS; j++) {
@@ -41,6 +41,26 @@ public class Graph {
             }
         }
         return -1;
+    }
+
+    public void mst() {
+        vertexList[0].wasVisited = true;
+        theStack.push(0);
+        while (!theStack.isEmpty()) {
+            int currentVertex = theStack.peek();
+            int v = getAdjUnvisitedVertex(currentVertex);
+            if (v == -1) {
+                theStack.pop();
+            } else {
+                vertexList[v].wasVisited = true;
+                theStack.push(v);
+                displayVertex(currentVertex);
+                displayVertex(v);
+            }
+        }
+        for (int i = 0; i < nVerts; i++) {
+            vertexList[i].wasVisited = false;
+        }
     }
 
     public void dfs() {
