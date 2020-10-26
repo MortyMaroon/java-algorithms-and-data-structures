@@ -6,6 +6,7 @@ public class test {
         BFSApp();
         DFSApp();
         MSTApp();
+        TopoApp();
     }
 
     public static void MSTApp() {
@@ -60,5 +61,26 @@ public class test {
         System.out.print("Visits: ");
         theGraph.bfs();
         System.out.println();
+    }
+
+    public static void TopoApp() {
+        Graph theGraph = new Graph();
+        theGraph.addVertex('A');
+        theGraph.addVertex('B');
+        theGraph.addVertex('C');
+        theGraph.addVertex('D');
+        theGraph.addVertex('E');
+        theGraph.addVertex('F');
+        theGraph.addVertex('G');
+        theGraph.addVertex('H');
+        theGraph.addTopoEdge(0,3);
+        theGraph.addTopoEdge(0,4);
+        theGraph.addTopoEdge(1,4);
+        theGraph.addTopoEdge(2,5);
+        theGraph.addTopoEdge(3,6);
+        theGraph.addTopoEdge(4,6);
+        theGraph.addTopoEdge(5,7);
+        theGraph.addTopoEdge(6,7);
+        theGraph.topo();
     }
 }

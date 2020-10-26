@@ -6,11 +6,12 @@ import java.util.Stack;
 
 public class Graph {
     private final int MAX_VERTS = 20;
-    private Vertex vertexList[];
-    private Stack<Integer> theStack;
-    private Queue<Integer> theQueue;
-    private int adjMat[][];
+    private  Vertex[] vertexList;
+    private  Stack<Integer> theStack;
+    private  Queue<Integer> theQueue;
+    private int[][] adjMat;
     private int nVerts;
+    private char sortedArray[];
 
     public Graph() {
         this.vertexList = new Vertex[MAX_VERTS];
@@ -23,6 +24,7 @@ public class Graph {
                 adjMat[i][j] = 0;
             }
         }
+        sortedArray = new char[MAX_VERTS];
     }
 
     public void addVertex(char lab) {
@@ -34,7 +36,73 @@ public class Graph {
         adjMat[end][start] = 1;
     }
 
-    public int getAdjUnvisitedVertex(int v) {
+    public void addTopoEdge(int start, int end) {
+        adjMat[start][end] = 1;
+    }
+
+    public void topo() {
+        int orig_nVert = nVerts;
+        while (nVerts > 0) {
+            int currentVertex = noSuccessor();
+            if (currentVertex == -1) {
+                System.out.println("ERROR: Graph has cycles");
+                return;
+            }
+            sortedArray[nVerts - 1] = vertexList[currentVertex].label;
+            deleteVertex(currentVertex);
+        }
+        System.out.print("Topologically sorted order: ");
+        for (int i = 0; i < orig_nVert; i++) {
+            System.out.print(sortedArray[i]);
+        }
+        System.out.println();
+    }
+
+    private int noSuccessor() {
+        boolean isEdge;
+        for (int row = 0; row < nVerts; row++) {
+            isEdge = false;
+            for (int col = 0; col < nVerts; col++) {
+                if (adjMat[row][col] > 0) {
+                    isEdge = true;
+                    break;
+                }
+            }
+            if (!isEdge) {
+                return row;
+            }
+        }
+        return - 1;
+    }
+
+    private void deleteVertex(int delVert) {
+        if (delVert != nVerts - 1) {
+            for (int i = delVert; i < nVerts - 1; i++) {
+                vertexList[i] = vertexList[i + 1];
+            }
+            for (int row = delVert; row < nVerts - 1; row++) {
+                moveRowUp(row,nVerts - 1);
+            }
+            for (int col = delVert; col < nVerts - 1; col++) {
+                moveColLeft(col,nVerts - 1);
+            }
+        }
+        nVerts--;
+    }
+
+    private void moveRowUp(int row, int length) {
+        for (int col = 0; col < length; col++) {
+            adjMat[row][col] = adjMat[row + 1][col];
+        }
+    }
+
+    private void moveColLeft(int col, int length) {
+        for (int row = 0; row < length; row++) {
+            adjMat[row][col] = adjMat[row][col + 1];
+        }
+    }
+
+    private int getAdjUnvisitedVertex(int v) {
         for (int i = 0; i < nVerts; i ++) {
             if (adjMat[v][i] == 1 && vertexList[i].wasVisited == false) {
                 return i;
