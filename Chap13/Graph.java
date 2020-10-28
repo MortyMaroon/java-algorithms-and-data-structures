@@ -131,6 +131,27 @@ public class Graph {
         }
     }
 
+    public void bfsmst() {
+        vertexList[0].wasVisited = true;
+        theQueue.add(0);
+        while (!theQueue.isEmpty()) {
+            int currentVertex = theQueue.peek();
+            int v1 = currentVertex;
+            int v2;
+            while ((v2 = getAdjUnvisitedVertex(currentVertex)) != -1) {
+                vertexList[v2].wasVisited = true;
+                theQueue.add(v2);
+                displayVertex(v1);
+                displayVertex(v2);
+                System.out.print(" ");
+                v1 = v2;
+            }
+        }
+        for (int i = 0; i < nVerts; i++) {
+            vertexList[i].wasVisited = false;
+        }
+    }
+
     public void dfs() {
         vertexList[0].wasVisited = true;
         displayVertex(0);
