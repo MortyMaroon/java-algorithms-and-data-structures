@@ -1,8 +1,6 @@
 package Chap13;
 
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
+import java.util.*;
 
 public class Graph {
     private final int MAX_VERTS = 20;
@@ -12,6 +10,8 @@ public class Graph {
     private int[][] adjMat;
     private int nVerts;
     private char sortedArray[];
+    private ArrayList<LinkedList<Integer>> adjList;
+
 
     public Graph() {
         this.vertexList = new Vertex[MAX_VERTS];
@@ -25,10 +25,12 @@ public class Graph {
             }
         }
         sortedArray = new char[MAX_VERTS];
+        adjList = new ArrayList();
     }
 
     public void addVertex(char lab) {
         vertexList[nVerts++] = new Vertex(lab);
+        adjList.add(new LinkedList());
     }
 
     public void addEdge(int start, int end) {
@@ -38,6 +40,39 @@ public class Graph {
 
     public void addTopoEdge(int start, int end) {
         adjMat[start][end] = 1;
+    }
+
+    public void addEdgIbList(int start, int end) {
+        adjList.get(start).add(end);
+    }
+
+    private int find(int v) {
+        for (Integer vert : adjList.get(v)) {
+            if (vertexList[vert].wasVisited == false) {
+                return vert;
+            }
+        }
+        return -1;
+
+    }
+
+    public void dfsList() {
+        vertexList[0].wasVisited = true;
+        displayVertex(0);
+        theStack.push(0);
+        while (!theStack.isEmpty()) {
+            int v = find(theStack.peek());
+            if (v == -1) {
+                theStack.pop();
+            } else {
+                vertexList[v].wasVisited = true;
+                displayVertex(v);
+                theStack.push(v);
+            }
+        }
+        for (int i = 0; i < nVerts; i++) {
+            vertexList[i].wasVisited = false;
+        }
     }
 
     public void topo() {
@@ -134,10 +169,9 @@ public class Graph {
     public void bfsmst() {
         vertexList[0].wasVisited = true;
         theQueue.add(0);
+        int v1 = theQueue.peek(), v2;
         while (!theQueue.isEmpty()) {
-            int currentVertex = theQueue.peek();
-            int v1 = currentVertex;
-            int v2;
+            int currentVertex = theQueue.remove();
             while ((v2 = getAdjUnvisitedVertex(currentVertex)) != -1) {
                 vertexList[v2].wasVisited = true;
                 theQueue.add(v2);

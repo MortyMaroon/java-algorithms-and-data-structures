@@ -1,5 +1,7 @@
 package Chap13;
 
+import java.util.LinkedList;
+
 public class test {
 
     public static void main(String[] args) {
@@ -7,7 +9,8 @@ public class test {
 //        DFSApp();
 //        MSTApp();
 //        TopoApp();
-        BFSMSTApp();
+//        BFSMSTApp();
+        DFSListApp();
     }
 
     public static void MSTApp() {
@@ -110,6 +113,22 @@ public class test {
         theGraph.addEdge(7,8);
         System.out.print("Minimum spanning tree: ");
         theGraph.bfsmst();
+        System.out.println();
+    }
+
+    public static void DFSListApp() {
+        Graph theGraph = new Graph();
+        theGraph.addVertex('A');
+        theGraph.addVertex('B');
+        theGraph.addVertex('C');
+        theGraph.addVertex('D');
+        theGraph.addVertex('E');
+        theGraph.addEdgIbList(0,1);
+        theGraph.addEdgIbList(1,2);
+        theGraph.addEdgIbList(0,3);
+        theGraph.addEdgIbList(3,4);
+        System.out.print("Visits: ");
+        theGraph.dfsList();
         System.out.println();
     }
 }
