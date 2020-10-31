@@ -224,6 +224,17 @@ public class Graph {
         }
     }
 
+    public void getAdjTable() {
+        for (int i = 0; i < nVerts; i++) {
+            displayVertex(i);
+            for (Integer vert : adjList.get(i)) {
+                System.out.print("->");
+                displayVertex(vert);
+            }
+            System.out.println();
+        }
+    }
+
     public void displayVertex(int v) {
         System.out.print(vertexList[v].label);
     }

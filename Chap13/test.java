@@ -1,7 +1,5 @@
 package Chap13;
 
-import java.util.LinkedList;
-
 public class test {
 
     public static void main(String[] args) {
@@ -10,7 +8,8 @@ public class test {
 //        MSTApp();
 //        TopoApp();
 //        BFSMSTApp();
-        DFSListApp();
+//        DFSListApp();
+        ADJTableApp();
     }
 
     public static void MSTApp() {
@@ -129,6 +128,34 @@ public class test {
         theGraph.addEdgIbList(3,4);
         System.out.print("Visits: ");
         theGraph.dfsList();
+        System.out.println();
+    }
+
+    public static void ADJTableApp() {
+        Graph theGraph = new Graph();
+        theGraph.addVertex('A');
+        theGraph.addVertex('B');
+        theGraph.addVertex('C');
+        theGraph.addVertex('D');
+        theGraph.addVertex('E');
+        theGraph.addVertex('F');
+        theGraph.addVertex('G');
+        theGraph.addVertex('H');
+        theGraph.addVertex('I');
+        theGraph.addEdgIbList(0,1);
+        theGraph.addEdgIbList(0,3);
+        theGraph.addEdgIbList(1,5);
+        theGraph.addEdgIbList(2,0);
+        theGraph.addEdgIbList(3,4);
+        theGraph.addEdgIbList(3,7);
+        theGraph.addEdgIbList(4,5);
+        theGraph.addEdgIbList(5,8);
+        theGraph.addEdgIbList(6,1);
+        theGraph.addEdgIbList(7,2);
+        theGraph.addEdgIbList(8,6);
+        theGraph.addEdgIbList(8,7);
+        System.out.println("Сonnectivity table for a directed graph: ");
+        theGraph.getAdjTable();
         System.out.println();
     }
 }
