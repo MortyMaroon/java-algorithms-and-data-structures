@@ -34,4 +34,54 @@ public class Graph {
     public void displayVert(int v) {
         System.out.print(vertexList[v].label);
     }
+
+    public void mstw() {
+        currentVert = 0;
+        while (nTree < nVerts - 1) {
+            vertexList[currentVert].isInTree = true;
+            nTree++;
+            for (int i = 0; i < nVerts; i++) {
+                if (i == currentVert) {
+                    continue;
+                }
+                if (vertexList[i].isInTree) {
+                    continue;
+                }
+                int distance = adjMAt[currentVert][i];
+                if (distance == INFINITY) {
+                    continue;
+                }
+                putInPQ(i, distance);
+            }
+            if (thePQ.size() == 0) {
+                System.out.println(" Graph not connected");
+                return;
+            }
+            Edge theEdge = thePQ.removeMin();
+            int sourceVert = theEdge.srcVert;
+            currentVert = theEdge.destVert;
+            System.out.print(vertexList[sourceVert].label);
+            System.out.print(vertexList[currentVert].label);
+            System.out.print(" ");
+        }
+        for (int i = 0; i < nVerts; i++) {
+            vertexList[i].isInTree = false;
+        }
+    }
+
+    public void putInPQ(int newVert, int newDist) {
+        int queueIndex = thePQ.find(newVert);
+        if (queueIndex != -1) {
+            Edge tempEdge = thePQ.peekN(queueIndex);
+            int oldIDist = tempEdge.distance;
+            if (oldIDist > newDist) {
+                thePQ.removeN(queueIndex);
+                Edge theEdge = new Edge(currentVert,newVert,newDist);
+                thePQ.insert(theEdge);
+            }
+        } else {
+            Edge theEdge = new Edge(currentVert, newVert, newDist);
+            thePQ.insert(theEdge);
+        }
+    }
 }
