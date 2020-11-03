@@ -63,6 +63,14 @@ public class Deque {
         return temp;
     }
 
+    public long peekLeft() {
+        return dequeArray[leftSide];
+    }
+
+    public long peekRight() {
+        return dequeArray[rightSide];
+    }
+
     public boolean isFull() {
         return (nElements == maxSize);
     }

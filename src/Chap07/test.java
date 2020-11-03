@@ -4,7 +4,8 @@ public class test {
     public static void main(String[] args) {
 //        ShellSorted();
 //        PartitionApp();
-        QuickSortApp();
+//        QuickSortApp();
+        QuickSortApp2();
     }
 
     public static void ShellSorted(){
@@ -38,6 +39,18 @@ public class test {
     public static void QuickSortApp(){
         int maxSize = 16;
         ArrayIns arr = new ArrayIns(maxSize);
+        for (int i = 0; i < maxSize; i++) {
+            long n = (int) (Math.random() * 99);
+            arr.insert(n);
+        }
+        arr.display();
+        arr.quickSort();
+        arr.display();
+    }
+
+    public static void QuickSortApp2(){
+        int maxSize = 16;
+        ArrayIns2 arr = new ArrayIns2(maxSize);
         for (int i = 0; i < maxSize; i++) {
             long n = (int) (Math.random() * 99);
             arr.insert(n);

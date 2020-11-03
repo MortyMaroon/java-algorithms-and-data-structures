@@ -17,9 +17,6 @@ public class QueueApp {
         theQueue.insert(70);
         theQueue.insert(80);
 
-        while (!theQueue.isEmpty()) {
-            long n = theQueue.remove();
-            System.out.print(n +  " ");
-        }
+        theQueue.print();
     }
 }

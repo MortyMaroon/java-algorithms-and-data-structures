@@ -30,8 +30,8 @@ public class ArrayIns {
         if (size <= 3) {
             manualSort(left, right);
         } else {
-            long pivot = theArray[right];
-            int partition = partitionIt(left, right, pivot);
+            long median = medianOf3(left,right);
+            int partition = partitionIt(left, right, median);
             recQuickSort(left, partition - 1);
             recQuickSort(partition + 1, right);
         }
@@ -64,7 +64,7 @@ public class ArrayIns {
                 swap(leftPtr, rightPtr);
             }
         }
-        swap(leftPtr, right);
+        swap(leftPtr, right - 1);
         return leftPtr;
     }
 
